@@ -49,6 +49,11 @@ class Node implements NodeInterface
         $this->name = $name;
     }
 
+    public static function create($name)
+    {
+        return new Node($name);
+    }
+
     public function setEscaper(Escaper $escaper)
     {
         $this->escaper = $escaper;
