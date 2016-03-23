@@ -2,12 +2,17 @@
 
 namespace HtmlNode;
 
+use DOMDocument;
 use DOMElement;
 use Zend\Dom\Document\NodeList;
 use Zend\Escaper\Escaper;
 
 class DomElementList implements NodeInterface
 {
+    const HTML = 'html';
+
+    const TEXT = 'text';
+
     /**
      * @var DOMElement[]
      */
@@ -26,6 +31,39 @@ class DomElementList implements NodeInterface
     {
         $this->domElements = $domElements;
         $this->escaper     = $escaper;
+    }
+
+    public function setContent($content, $type)
+    {
+        foreach ($this->domElements as $domElement) {
+            foreach ($domElement->childNodes as $childNode) {
+                $domElement->removeChild($childNode);
+            }
+        }
+
+        if (self::TEXT === $type) {
+            foreach ($this->domElements as $domElement) {
+                $domElement->appendChild($domElement->ownerDocument->createTextNode($content));
+            }
+        } else {
+            foreach ($this->domElements as $domElement) {
+                $fragment = $domElement->ownerDocument->createDocumentFragment();
+                $fragment->appendXML($content);
+                $domElement->appendChild($fragment);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setText($text)
+    {
+        return $this->setContent($text, self::TEXT);
+    }
+
+    public function setHtml($html)
+    {
+        return $this->setContent($html, self::HTML);
     }
 
     public function setAttribute($name, $value = null)
