@@ -4,7 +4,7 @@ namespace HtmlNode;
 
 use Zend\Dom\Document;
 use Zend\Dom\Document\Query;
-use Zend\Escaper\Escaper;
+use Laminas\Escaper\Escaper;
 
 class Node implements NodeInterface
 {

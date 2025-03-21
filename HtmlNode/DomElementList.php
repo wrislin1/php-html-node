@@ -5,7 +5,7 @@ namespace HtmlNode;
 use DOMDocument;
 use DOMElement;
 use Zend\Dom\Document\NodeList;
-use Zend\Escaper\Escaper;
+use Laminas\Escaper\Escaper;
 
 class DomElementList implements NodeInterface
 {
